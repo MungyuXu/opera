@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.UserMapper">
+
+
+<select id="findUserByUsernameAndPwd" parameterType="pojo.User" resultType="pojo.User">
+    select * from user where username=#{username} and pwd=#{pwd}
+</select>
+
+<insert id="addUser" parameterType="pojo.User" >
+    insert  into user(username,address,pwd)
+    values (#{username},#{address},#{pwd})
+
+</insert>
+
+    <!--<select id="findByUsername" parameterType="pojo.User" resultType="pojo.User">-->
+<select id="findByUsername"  resultType="pojo.User">
+SELECT  * FROM  user WHERE username = #{username}
+</select>
+
+    <delete id="deleteUser" parameterType="pojo.User">
+        DELETE FROM user WHERE username = #{username}
+    </delete>
+<!--不能用、、注释，否则不报错但元素类型为 "mapper"
+的内容必须匹配 "(cache-ref|cache|resultMap*|parameterMap*|sql*|insert*|update*|delete*|sel-->
+    <update id="updateUser" parameterType="pojo.User">
+        update  user set  pwd=#{pwd} ,address=#{address}
+        where  username=#{username}
+    </update>
+
+    <select id="findAllUser" parameterType="pojo.User" resultType="pojo.User">
+        SELECT  * FROM user
+    </select>
+
+</mapper>

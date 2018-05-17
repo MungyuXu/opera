@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ActorMapper">
+
+<resultMap id="baseResultMap" type="Actor">
+    <id column="aid" property="id"></id>
+    <result column="oid" property="oid"></result>
+    <result column="actorName" property="actorName"></result>
+</resultMap>
+    <resultMap id="ao" type="Actor" extends="baseResultMap">
+        <association property="opera" javaType="Opera">
+        <id property="oid" column="oid"></id>
+        <result column="userId" property="userId"></result>
+        <result column="operaName" property="operaName"></result>
+        <result column="operaInfo" property="operaInfo"></result>
+        <result column="operaImg" property="operaImg"></result>
+        </association>
+    </resultMap>
+    <!--<resultMap id="actorOpera" type="Actor" extends="baseResultMap">-->
+        <!--<association property="opera" javaType="Opera">-->
+            <!--<id property="oid" column="oid"></id>-->
+            <!--<result column="userId" property="userId"></result>-->
+            <!--<result column="operaName" property="operaName"></result>-->
+            <!--<result column="operaInfo" property="operaInfo"></result>-->
+            <!--<result column="operaImg" property="operaImg"></result>-->
+        <!--</association>-->
+    <!--</resultMap>-->
+
+    <!--<resultMap id="actorsOpera" type="Actor" extends="baseResultMap">-->
+
+        <!--<collection property="operas"  ofType="Opera">-->
+        <!--<id column="" property="oid"></id>-->
+        <!--<result column="userId" property="userId"></result>-->
+        <!--<result column="operaName" property="operaName"></result>-->
+        <!--<result column="operaInfo" property="operaInfo"></result>-->
+        <!--<result column="operaImg" property="operaImg"></result>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+
+
+    <select id="findActorsByOname" resultMap="ao" >
+        select * from opera,actor
+        where opera.oid=actor.oid and opera.operaName=#{operaName}
+    </select>
+</mapper>

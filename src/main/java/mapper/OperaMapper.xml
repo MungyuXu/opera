@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.OperaMapper">
+
+    <insert id="addOpera" parameterType="pojo.Opera" >
+        insert  into opera(userId,operaName,operaInfo,operaImg)
+        values (#{userId},#{operaName},#{operaInfo},#{operaImg})
+    </insert>
+
+    <select id="findOperaByOperaName"  resultType="pojo.Opera">
+        select * from opera where operaName=#{operaName}
+    </select>
+
+    <delete id="deleteOpera" parameterType="pojo.Opera" >
+        delete  from  opera where  operaName=#{operaName}
+    </delete>
+    <update id="updateOpera" parameterType="pojo.Opera" >
+        update  opera set operaInfo=#{operaInfo},operaImg=#{operaImg}
+        where operaName=#{operaName}
+    </update>
+
+    <select id="findAllOpera" parameterType="pojo.Opera" resultType="pojo.Opera">
+        select  * from opera
+    </select>
+
+
+
+
+    <resultMap id="baseResultMap" type="Opera">
+        <id column="oid" property="oid"></id>
+        <result column="userId" property="userId"></result>
+        <result column="operaName" property="operaName"></result>
+        <result column="operaInfo" property="operaInfo"></result>
+        <result column="operaImg" property="operaImg"></result>
+    </resultMap>
+
+
+    <resultMap id="actorsOpera" type="Actor" extends="baseResultMap">
+
+        <collection property="actors"  ofType="Actor">
+            <id column="aid" property="id"></id>
+        <result column="oid" property="oid"></result>
+        <result column="actorName" property="actorName"></result>
+        </collection>
+    </resultMap>
+    <select id="findActorByOname" resultMap="actorsOpera" >
+        select * from opera,actor
+        where opera.oid=actor.oid and opera.operaName=#{operaName}
+    </select>
+
+</mapper>
